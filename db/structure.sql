@@ -4,3 +4,10 @@ CREATE TABLE lists (
 	list_name VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE elements (
+	element_id INTEGER  AUTO_INCREMENT PRIMARY KEY,
+	list_id INTEGER NOT NULL,
+	element_name VARCHAR(255) NOT NULL,
+	element_is_bought INTEGER(1) DEFAULT 0
+);
+	

@@ -16,8 +16,16 @@ class Lista extends Abstrct {
 		$newId = $this->db->lastInsertId();
 		return $newId;
 	}
-		
-		
+	
+	public function getList($id) {
+		$sql = 'SELECT * FROM lists WHERE list_id = :id';
+		$stmt = $this->db->prepare($sql);
+		$stmt->execute(array(
+			'id' => $id
+		));
+		$row = $stmt->fetch();
+		return $row;
+	}	
 }
 
 ?>
