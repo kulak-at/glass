@@ -3,6 +3,9 @@
 {% block content %}
 
 CREATE NEW LIST:
-<input type="text" />
+<form name="input" action="/create" method="post">
+Username: <input type="text" name="listname" />
+<input type="submit" value="Add" />
+</form>
 
 {% endblock %}

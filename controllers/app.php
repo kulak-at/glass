@@ -6,8 +6,8 @@ $subapp->get('/',function() use ($app) {
 	return $app->view_name = 'list';
 });
 
-$subapp->get('/create/{name}',function($name) use ($app) {
-	
+$subapp->post('/create/',function() use ($app) {
+	$name = $app['request']->get('listname');
 	$dbLista = new Glass\Db\Lista();
 	$cardId = "dupa08";
 	try {
