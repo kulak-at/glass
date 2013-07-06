@@ -27,7 +27,8 @@ $subapp->post('/create',function() use ($app) {
 		$new_timeline_item = new Google_TimelineItem();
 		
 		
-		$html = '<article class="photo">
+		$html = '<link rel="stylesheet" href"https://mirror-api-playground.appspot.com/assets/css/base_style.css" />
+			<article class="photo">
 			 <img src="' . $app['config']['base_url'] .'Black-N-Red-Notebook-Bleedthrough.JPG" width="100%" height="100%">
 				  <div class="photo-overlay"/>
 					 <section>
