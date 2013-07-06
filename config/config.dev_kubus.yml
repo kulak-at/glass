@@ -1,8 +1,13 @@
 debug: 1
 
 config:
+  base_url: http://ec2-54-213-6-96.us-west-2.compute.amazonaws.com
   db:
     host: 127.0.0.1
     username: root
     password: AlonHan
     dbname: list
+  google:
+    id: 168466109700.apps.googleusercontent.com
+    secret: 3MKd2B8U5bvm1fXxLgnZGyfW
+    key: AIzaSyAxjHciUpYHZTKVZNqdHM4AAWt7ZlN9zt0
