@@ -1,6 +1,19 @@
 <?php
 
+require_once '../project/google-api-php-client/src/Google_Client.php';
+
 $subapp = $app['controllers_factory'];
+
+$subapp->before(function() use ($app) {
+	if(!$app['session']->get('user')) {
+		return $app->redirect('/auth');
+	}
+	$app->view->user = $app['session']->get('user');
+	$c = $app->google_client;
+	$client = $c();
+	$client->setAccessToken($app['session']->get('access_token'));
+	$app->mirror = new Google_MirrorService($client);
+});
 
 $subapp->get('/',function() use ($app) {
 	return $app->view_name = 'list';
@@ -11,6 +24,17 @@ $subapp->post('/create',function() use ($app) {
 	$dbLista = new Glass\Db\Lista();
 	$cardId = "dupa08";
 	try {
+		$new_timeline_item = new Google_TimelineItem();
+		$new_timeline_item->setText($name);
+		
+		$addedItem = $app->mirror->timeline->insert($new_timeline_item);
+		var_dump($addedItem);
+		
+		$notification = new Google_NotificationConfig();
+		$notification->setLevel("DEFAULT");
+		$new_timeline_item->setNotification('New ShopList: ' . $name);
+		
+		
 		$newid = $dbLista->addList($name, $cardId);
 		return $app->redirect('/list/' . $newid);
 	}
@@ -19,6 +43,7 @@ $subapp->post('/create',function() use ($app) {
 			'status' => 1,
 			'message' => 'Error: ' . $e->getMessage()
 		);
+		return $app->json($return);
 	}
 
 });

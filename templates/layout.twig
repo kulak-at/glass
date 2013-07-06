@@ -2,10 +2,19 @@
 <html>
 	<head>
 		<title>ProductList</title>
+		<link rel="stylesheet" type="text/css" href="/css/styles.css" />
 	</head>
 	<body>
-		{% block content %}
-			
-		{% endblock %}
+		<div id="all">
+			<div id="profile">
+				<h3>{{user.name}}</h3>
+				<img src="{{user.picture}}" />
+				<a href="/auth/de">Logout</a>
+			</div>
+
+			{% block content %}
+
+			{% endblock %}
+		</div>
 	</body>
 </html>
