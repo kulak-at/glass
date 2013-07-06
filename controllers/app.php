@@ -2,6 +2,17 @@
 
 $subapp = $app['controllers_factory'];
 
+$subapp->before(function() use ($app) {
+	if(!$app['session']->get('user')) {
+		return $app->redirect('/auth');
+	}
+	$app->view->user = $app['session']->get('user');
+	$c = $app->google_client;
+	$client = $c();
+	$client->setAccessToken($app['session']->get('access_token'));
+	$app->mirror = new Google_MirrorService($client);
+});
+
 $subapp->get('/',function() use ($app) {
 	return $app->view_name = 'list';
 });

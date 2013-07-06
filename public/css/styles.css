@@ -1,0 +1,9 @@
+#profile {
+	float: right;
+	width: 250px;
+}
+
+#profile img {
+	width: 150px;
+	float: left;
+}
