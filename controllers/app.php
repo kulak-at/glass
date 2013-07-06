@@ -27,7 +27,12 @@ $subapp->post('/create',function() use ($app) {
 		$new_timeline_item = new Google_TimelineItem();
 		$new_timeline_item->setText($name);
 		
-		$addedItem = $app->mirror->timeline->insert($new_timeline_item);
+		$imageUrl = "http://ec2-54-213-6-105.us-west-2.compute.amazonaws.com/Black-N-Red-Notebook-Bleedthrough.JPG";
+		$attachment = array(
+			'data' => file_get_contents($imageUrl),
+			'mimeType' => 'image/jpg'
+			);
+		$addedItem = $app->mirror->timeline->insert($new_timeline_item, $attachment);
 		var_dump($addedItem);
 		
 		$notification = new Google_NotificationConfig();
