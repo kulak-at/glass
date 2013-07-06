@@ -27,7 +27,7 @@ $subapp->post('/create',function() use ($app) {
 		$new_timeline_item = new Google_TimelineItem();
 		$new_timeline_item->setText($name);
 		
-		$imageUrl = "http://ec2-54-213-6-105.us-west-2.compute.amazonaws.com/Black-N-Red-Notebook-Bleedthrough.JPG";
+		$imageUrl = $app['config']['base_url'] . "/img/chipotle-tube-640x360.jpg";
 		$attachment = array(
 			'data' => file_get_contents($imageUrl),
 			'mimeType' => 'image/jpg'
@@ -72,8 +72,28 @@ $subapp->post('/list/{listId}/element',function($listId) use ($app) {
 	$descr = $app['request']->get('descr');
 	$qty = $app['request']->get('quantity');
 	$dbElement = new Glass\Db\Element();
+	$dbList = new Glass\Db\Lista();
 	try {
 		$newid = $dbElement->addElement($listId, $name, $descr, $qty);
+		$list = $dbList->getList($listId);
+		
+		$card = $app->mirror->timeline->get($list['card_id']);
+		
+		$pages = $card->getHtmlPages();
+		
+		
+		if(!$pages)
+			$pages = array();
+		
+		$pages[] = '<article>
+			<h2>' . $name . '</h2>
+			<h3>' . $descr . '</h3>
+			<h4>Count: ' . $qty . '</h4>
+		</article>';
+		$card->setHtmlPages($pages);
+		var_dump($card);
+		$app->mirror->timeline->update($list['card_id'],$card);
+		
 		return $app->redirect('/list/' . $listId);
 	}
 	catch(\Exception $e) {
