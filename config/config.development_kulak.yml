@@ -1,8 +1,13 @@
 debug: 1
 
 config:
+  base_url: http://ec2-46-137-31-169.eu-west-1.compute.amazonaws.com
   db:
     host: 127.0.0.1
     username: root
     password: qwerty
     dbname: product_list
+  google:
+    id: 502853018257.apps.googleusercontent.com
+    secret: ldx-WW_FDnclG1ecelyoFSkU
+    key: AIzaSyCSdU77-XDJSdW3jWhQ3rs8_oVb8oZ8XJE
