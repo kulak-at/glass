@@ -1,5 +1,7 @@
 <?php
 
+require_once '../project/google-api-php-client/src/Google_Client.php';
+
 $subapp = $app['controllers_factory'];
 
 $subapp->before(function() use ($app) {
@@ -17,11 +19,22 @@ $subapp->get('/',function() use ($app) {
 	return $app->view_name = 'list';
 });
 
-$subapp->post('/create/',function() use ($app) {
+$subapp->post('/create',function() use ($app) {
 	$name = $app['request']->get('listname');
 	$dbLista = new Glass\Db\Lista();
 	$cardId = "dupa08";
 	try {
+		$new_timeline_item = new Google_TimelineItem();
+		$new_timeline_item->setText($name);
+		
+		$addedItem = $app->mirror->timeline->insert($new_timeline_item);
+		var_dump($addedItem);
+		
+		$notification = new Google_NotificationConfig();
+		$notification->setLevel("DEFAULT");
+		$new_timeline_item->setNotification('New ShopList: ' . $name);
+		
+		
 		$newid = $dbLista->addList($name, $cardId);
 		return $app->redirect('/list/' . $newid);
 	}
@@ -30,6 +43,7 @@ $subapp->post('/create/',function() use ($app) {
 			'status' => 1,
 			'message' => 'Error: ' . $e->getMessage()
 		);
+		return $app->json($return);
 	}
 
 });
