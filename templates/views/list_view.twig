@@ -2,7 +2,7 @@
 
 {% block content %}
 
-List with id: {{id}} <br> <br>
+<h1> {{name}} </h1>
 
 <form action="/list/{{id}}/element" method="POST">
 Input product name: <br>
@@ -14,14 +14,14 @@ Input quantity: <br>
 <input type="submit" value="Submit">
 </form>
 
-<dl>
-    
-    <dt>Rotato</dt>
-    <dd>- Round and nice</dd>
-    
-    <dt>Your mom</dt>
-    <dd>- As big as possible</dd>
+<h2> List of items to buy: </h2>
 
-</dl>
+    {% for element in elements %}
+
+        <dt> <b>{{element.element_name}}</b> </dt>
+            <dd>- {{element.description}} </dd>
+            <dd>- How many: {{element.quantity}} </dd>
+
+    {% endfor %}
 
 {% endblock %}
