@@ -26,6 +26,16 @@ class Lista extends Abstrct {
 		$row = $stmt->fetch();
 		return $row;
 	}	
+	
+	public function getListElements($id){
+		$sql = 'SELECT * FROM elements WHERE list_id = :id';
+		$stmt = $this->db->prepare($sql);
+		$stmt->execute(array(
+			'id' => $id
+		));
+		$rows = $stmt->fetchAll();
+		return $rows;
+	}
 }
 
 ?>

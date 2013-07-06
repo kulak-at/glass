@@ -8,6 +8,8 @@ CREATE TABLE elements (
 	element_id INTEGER  AUTO_INCREMENT PRIMARY KEY,
 	list_id INTEGER NOT NULL,
 	element_name VARCHAR(255) NOT NULL,
+	description VARCHAR(255),
+	quantity INTEGER DEFAULT 1,
 	element_is_bought INTEGER(1) DEFAULT 0
 );
 	
