@@ -25,8 +25,18 @@ $subapp->post('/create',function() use ($app) {
 	$cardId = "dupa08";
 	try {
 		$new_timeline_item = new Google_TimelineItem();
-		$new_timeline_item->setText($name);
 		
+		
+		$html = '<link rel="stylesheet" href"https://mirror-api-playground.appspot.com/assets/css/base_style.css" />
+			<article class="photo">
+			 <img src="' . $app['config']['base_url'] .'Black-N-Red-Notebook-Bleedthrough.JPG" width="100%" height="100%">
+				  <div class="photo-overlay"/>
+					 <section>
+					  <p class="text-auto-size">' . $name . '</p>
+					</section>
+			</article>"';
+		$new_timeline_item->setHtml($html);
+	
 		$addedItem = $app->mirror->timeline->insert($new_timeline_item);
 		var_dump($addedItem);
 		
@@ -49,15 +59,9 @@ $subapp->post('/create',function() use ($app) {
 });
 
 $subapp->get('/list/{id}',function($id) use ($app) {
-
+    
+        $app->view->dupa = "dupa";
         $app->view->id = $id;
-        
-        $db = new Glass\Db\Lista();
-        
-        $list = $db->getList($id);
-        
-        $app->view->name = $list["list_name"];
-        $app->view->elements = $db->getListElements($id);
     
          return $app->view_name = 'list_view';
 });
@@ -66,6 +70,7 @@ $subapp->post('/list/{listId}/element',function($listId) use ($app) {
 	$name = $app['request']->get('prod_name');
 	$descr = $app['request']->get('descr');
 	$qty = $app['request']->get('quantity');
+	$type = $app['request']->get('type');
 	$dbElement = new Glass\Db\Element();
 	try {
 		$newid = $dbElement->addElement($listId, $name, $descr, $qty);
