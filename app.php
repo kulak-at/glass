@@ -9,7 +9,6 @@ ini_set('display_errors','On');
 defined('_ENV') ||
 	define('_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
 
-
 $loader = require_once __DIR__ . '/vendor/autoload.php';
 
 // autoloading project specifics.

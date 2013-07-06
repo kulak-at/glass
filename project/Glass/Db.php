@@ -32,7 +32,7 @@ class Db {
 		
 		// creating new PDO instance.
 		
-		$dsn = 'pgsql:dbname='.self::$settings['dbname'] . ';host=' . self::$settings['host'];
+		$dsn = 'mysql:dbname='.self::$settings['dbname'] . ';host=' . self::$settings['host'];
 		
 		self::$dbHandler = new \PDO($dsn,self::$settings['username'],self::$settings['password']);
 		return self::$dbHandler;

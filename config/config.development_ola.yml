@@ -4,5 +4,5 @@ config:
   db:
     host: 127.0.0.1
     username: root
-    password: qwerty
+    password: slonnapogosticku
     dbname: product_list
