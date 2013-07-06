@@ -25,14 +25,18 @@ $subapp->post('/create',function() use ($app) {
 	$cardId = "dupa08";
 	try {
 		$new_timeline_item = new Google_TimelineItem();
-		$new_timeline_item->setText($name);
 		
-		$imageUrl = "http://ec2-54-213-6-105.us-west-2.compute.amazonaws.com/Black-N-Red-Notebook-Bleedthrough.JPG";
-		$attachment = array(
-			'data' => file_get_contents($imageUrl),
-			'mimeType' => 'image/jpg'
-			);
-		$addedItem = $app->mirror->timeline->insert($new_timeline_item, $attachment);
+		
+		$html = '<article class="photo">
+			 <img src="' . $app['config']['base_url'] .'Black-N-Red-Notebook-Bleedthrough.JPG" width="100%" height="100%">
+				  <div class="photo-overlay"/>
+					 <section>
+					  <p class="text-auto-size">' . $name . '</p>
+					</section>
+			</article>"';
+		$new_timeline_item->setHtml($html);
+	
+		$addedItem = $app->mirror->timeline->insert($new_timeline_item);
 		var_dump($addedItem);
 		
 		$notification = new Google_NotificationConfig();
@@ -54,15 +58,9 @@ $subapp->post('/create',function() use ($app) {
 });
 
 $subapp->get('/list/{id}',function($id) use ($app) {
-
+    
+        $app->view->dupa = "dupa";
         $app->view->id = $id;
-        
-        $db = new Glass\Db\Lista();
-        
-        $list = $db->getList($id);
-        
-        $app->view->name = $list["list_name"];
-        $app->view->elements = $db->getListElements($id);
     
          return $app->view_name = 'list_view';
 });
