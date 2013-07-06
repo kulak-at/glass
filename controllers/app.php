@@ -22,23 +22,22 @@ $subapp->get('/',function() use ($app) {
 $subapp->post('/create',function() use ($app) {
 	$name = $app['request']->get('listname');
 	$dbLista = new Glass\Db\Lista();
-	$cardId = "dupa08";
 	try {
 		$new_timeline_item = new Google_TimelineItem();
-		$new_timeline_item->setText($name);
 		
-		$imageUrl = $app['config']['base_url'] . "/img/chipotle-tube-640x360.jpg";
-		$attachment = array(
-			'data' => file_get_contents($imageUrl),
-			'mimeType' => 'image/jpg'
-			);
-		$addedItem = $app->mirror->timeline->insert($new_timeline_item, $attachment);
-		var_dump($addedItem);
+		$html = '<link rel="stylesheet" href"https://mirror-api-playground.appspot.com/assets/css/base_style.css" />
+			<article class="photo">
+			 <img src="' . $app['config']['base_url'] .'Black-N-Red-Notebook-Bleedthrough.JPG" width="100%" height="100%">
+				  <div class="photo-overlay"></div>
+					 <section>
+					  <p class="text-auto-size">' . $name . '</p>
+					</section>
+			</article>"';
+		$new_timeline_item->setHtml($html);
+	
+		$addedItem = $app->mirror->timeline->insert($new_timeline_item);
 		
-		$notification = new Google_NotificationConfig();
-		$notification->setLevel("DEFAULT");
-		$new_timeline_item->setNotification('New ShopList: ' . $name);
-		
+		$cardId = $addedItem->getId();
 		
 		$newid = $dbLista->addList($name, $cardId);
 		return $app->redirect('/list/' . $newid);
@@ -54,15 +53,9 @@ $subapp->post('/create',function() use ($app) {
 });
 
 $subapp->get('/list/{id}',function($id) use ($app) {
-
+    
+        $app->view->dupa = "dupa";
         $app->view->id = $id;
-        
-        $db = new Glass\Db\Lista();
-        
-        $list = $db->getList($id);
-        
-        $app->view->name = $list["list_name"];
-        $app->view->elements = $db->getListElements($id);
     
          return $app->view_name = 'list_view';
 });
@@ -71,6 +64,7 @@ $subapp->post('/list/{listId}/element',function($listId) use ($app) {
 	$name = $app['request']->get('prod_name');
 	$descr = $app['request']->get('descr');
 	$qty = $app['request']->get('quantity');
+	$type = $app['request']->get('type');
 	$dbElement = new Glass\Db\Element();
 	$dbList = new Glass\Db\Lista();
 	try {
