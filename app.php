@@ -18,11 +18,11 @@ $app = new Silex\Application();
 
 $app['debug'] = true;
 
-//$app->register(new Silex\Provider\TwigServiceProvider(), array(
-//	'twig.path' => __DIR__ . '/templates'
-//));
-//$app->view_name = '';
-//$app->view = new stdClass();
+$app->register(new Silex\Provider\TwigServiceProvider(), array(
+	'twig.path' => __DIR__ . '/templates'
+));
+$app->view_name = '';
+$app->view = new stdClass();
 
 // registering providers
 $app->register(new Silex\Provider\SessionServiceProvider());
@@ -34,16 +34,16 @@ $app->register(new Igorw\Silex\ConfigServiceProvider(__DIR__."/config/config."._
 $app->register(new Glass\ProjectServiceProvider());
 
 
-//
-///*** MIDDLEWARES ***/
-//
-//// middleware for rendering
-//$app->after(function($req,$res) use ($app) {
-//	
-//	if(!$req->isXmlHttpRequest() && $app->view_name){
-//		$res->setContent($app['twig']->render('views/'.$app->view_name.'.twig', (array)$app->view));
-//	}
-//});
+
+/*** MIDDLEWARES ***/
+
+// middleware for rendering
+$app->after(function($req,$res) use ($app) {
+	
+	if(!$req->isXmlHttpRequest() && $app->view_name){
+		$res->setContent($app['twig']->render('views/'.$app->view_name.'.twig', (array)$app->view));
+	}
+});
 //
 //$loggedOnly = function() use ($app) {
 //	$user = $app['session']->get('user');
@@ -65,7 +65,7 @@ $app->register(new Glass\ProjectServiceProvider());
 /*** APPLICATION ***/
 
 $app->mount('/',include __DIR__ . '/controllers/app.php');
-//$app->mount('/api',include __DIR__ . '/controllers/api.php');
+$app->mount('/auth',include __DIR__ . '/controllers/auth.php');
 
 return $app;
 

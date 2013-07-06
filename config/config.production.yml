@@ -3,12 +3,6 @@ debug: 0
 config:
   db:
     host: 127.0.0.1
-    username: kulak
+    username: root
     password: qwerty
-    dbname: increment
-    salt: MTNmNDdmM2YxYjg4YWJiOWRiZGFkYjA3
-    
-instruments: [[CHF,JPY],[EUR,CHF],[EUR,GBP],[EUR,JPY],[EUR,USD],[GBP,JPY],[GBP,USD],[USD,CHF],[USD,JPY]]
-
-chart:
-  default_instrument: TRUEURUSD
+    dbname: product_list
