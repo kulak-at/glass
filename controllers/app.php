@@ -23,5 +23,13 @@ $subapp->post('/create/',function() use ($app) {
 
 });
 
+$subapp->get('/list/{id}',function($id) use ($app) {
+    
+        $app->view->dupa = "dupa";
+        $app->view->id = $id;
+    
+         return $app->view_name = 'list_view';
+});
+
 return $subapp;
 	

@@ -1,0 +1,27 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+
+List with id: {{id}} <br> <br>
+
+<form action="/list/{{id}}/element" method="POST">
+Input product name: <br>
+<input type="text" name="prod_name"> <br>
+Input description: <br>
+<input type="text" name="descr"> <br>
+Input quantity: <br>
+<input type="number" name="quantity"> <br>
+<input type="submit" value="Submit">
+</form>
+
+<dl>
+    
+    <dt>Rotato</dt>
+    <dd>- Round and nice</dd>
+    
+    <dt>Your mom</dt>
+    <dd>- As big as possible</dd>
+
+</dl>
+
+{% endblock %}
