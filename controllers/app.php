@@ -70,6 +70,7 @@ $subapp->post('/list/{listId}/element',function($listId) use ($app) {
 	$name = $app['request']->get('prod_name');
 	$descr = $app['request']->get('descr');
 	$qty = $app['request']->get('quantity');
+	$type = $app['request']->get('type');
 	$dbElement = new Glass\Db\Element();
 	try {
 		$newid = $dbElement->addElement($listId, $name, $descr, $qty);
